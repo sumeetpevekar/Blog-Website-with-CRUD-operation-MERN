@@ -1,0 +1,22 @@
+User = [{
+    name : sumeetpevekar,
+    email : sumeetpevekar@gmail.com,
+    password : sumeetpevekar
+},
+{
+    name : anthonymark,
+    email : anthony@gmail.com,
+    password : anthonymark
+},
+{
+    name : anthonymark,
+    email : anthony@gmail.com,
+    password : anthonymark
+}]
+
+adminUser : {
+    name : sumeetpevekarSamy,
+    email : samy@gmail.com,
+    password : hellosumit
+}
+clusterPassword : sumitpevekar1810: sumit1810
