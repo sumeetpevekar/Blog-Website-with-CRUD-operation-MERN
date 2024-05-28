@@ -74,7 +74,7 @@ const Login = () => {
                                 </div>
                                 <div>
                                     <span><FaLock /></span>
-                                    <input value={loginUser.password} onChange={handleInput} use  type={!open ? "password" : "text"} name="password" id="password" placeholder="Password" required autoComplete="off"/>
+                                    <input value={loginUser.password} onChange={handleInput} use  type={!open ? "password" : "text"} name="password" id="password" placeholder="Password" autoComplete="off"/>
                                     <span className={styles.viewToggle} onClick={viewPassword}>{!open ? <FaRegEyeSlash /> : <FaRegEye />}</span>
                                 </div>
                                 <button className={`${styles.submitBtn}`} type="submit">Submit</button>

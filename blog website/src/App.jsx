@@ -21,6 +21,7 @@ import AdminBlogs from "./components/layouts/AdminBlogs";
 import CreateBlog from "./components/CreateBlog";
 import AdminBlogUpdate from "./components/layouts/AdminBlogUpdate";
 import UserBlogUpdate from "./components/UserBlogUpdate";
+import SearchBlog from "./pages/SearchBlog";
 const App = () => {
   return (
     <>
@@ -29,6 +30,7 @@ const App = () => {
       <Route path="/" Component={Container} >
         <Route path="/"  Component={Home} />
         <Route path="/about"  Component={About} />
+        <Route path="/search/:data"  Component={SearchBlog} />
         <Route path="/contact"  Component={Contact} />
         <Route path="/login"  Component={Login} />
         <Route path="/register"  Component={Register} />

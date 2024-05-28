@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export const AuthContext = createContext([{
     storeTokenInLocale : () => {},
@@ -91,7 +91,10 @@ const AuthProvider = ({children}) => {
         }
         console.log(userBlogs)
     }
-    
+    // search blog functionality
+    const [filteredList, setFilteredList] = useState([])
+    const sortedBlogs = [...blogs].reverse();
+   
     useEffect(() => {
         getBlogsData();
         userAuthentication();
@@ -115,6 +118,9 @@ const AuthProvider = ({children}) => {
         singleBlog,
         getUsersBlogs,
         userBlogs,
+        sortedBlogs,
+        filteredList,
+        setFilteredList,
     }}>
         {children}
     </AuthContext.Provider>

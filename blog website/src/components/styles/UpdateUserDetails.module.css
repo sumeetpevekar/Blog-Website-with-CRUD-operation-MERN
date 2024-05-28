@@ -65,3 +65,8 @@
     align-self: center;
     margin-top: 10px;
 }
+.inputNumber::-webkit-outer-spin-button,
+.inputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

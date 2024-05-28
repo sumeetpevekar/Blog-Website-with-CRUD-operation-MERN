@@ -32,6 +32,11 @@
     margin-bottom: 20px;
     padding-left: 10px;
 }
+.inputNumber::-webkit-outer-spin-button,
+.inputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .updateBtn{
     background-color: rgb(45, 128, 236);
     width: 100px;

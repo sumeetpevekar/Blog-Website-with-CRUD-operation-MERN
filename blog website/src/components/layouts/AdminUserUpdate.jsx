@@ -70,7 +70,7 @@ const AdminUserUpdate = () => {
                 <label htmlFor="email" className={styles.label}>Email</label>
                 <input type="email" id="email" name="email" value={data.email}  onInput={handleInput} className={styles.input}/>
                 <label htmlFor="phone" className={styles.label}>Mobile</label>
-                <input type="number" id="phone" name="phone" value={data.phone}  onInput={handleInput} className={styles.input}/>
+                <input type="number" id="phone" name="phone" value={data.phone}  onInput={handleInput} className={`${styles.input} ${styles.inputNumber}`}/>
                 <button type="submit" className={styles.updateBtn}>Update</button>
                 </form>
             </div>

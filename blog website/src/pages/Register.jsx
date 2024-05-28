@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+// const {storeTokenInLocale} = useAuth();
 
 const Register = () => {
-    const {storeTokenInLocale} = useAuth();
     const [user, setUser] = useState({
         name : "",
         username : "",
@@ -78,7 +78,7 @@ const Register = () => {
                                 </div>
                                 <div>
                                 <label htmlFor="phone">Phone</label>
-                                    <input value={user.phone} onChange={handleInput}  type="number" name="phone" id="phone" placeholder="phone" required autoComplete="off"/>
+                                    <input className={styles.inputNumber} value={user.phone} onChange={handleInput}  type="number" name="phone" id="phone" placeholder="phone" required autoComplete="off"/>
                                 </div>
                                 <div>
                                 <label htmlFor="password">Password</label>

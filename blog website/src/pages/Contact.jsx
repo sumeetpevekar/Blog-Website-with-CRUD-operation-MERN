@@ -4,7 +4,7 @@ import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 const Contact = () => {
-    const {user} = useAuth()
+    const {user} = useAuth();
 
     const [contactUser, setContactUser] = useState({
         username : "",

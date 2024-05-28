@@ -66,6 +66,11 @@
     cursor: pointer;
     font-family: "Poppins", sans-serif;
 }
+.inputNumber::-webkit-outer-spin-button,
+.inputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 @media only screen and (max-width:1200px) {
     .registrationImage{
         width: 400px;
