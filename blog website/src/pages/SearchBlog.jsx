@@ -6,47 +6,55 @@ import { IoSearch } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const useOnLoad = (callback) => {
-    const {blogs, sortedBlogs,setFilteredList, filteredList, storeBlogIdTokenInLocale} = useAuth();
-    useEffect(() => {
-      callback();
-    }, [callback]);
-};
 
 const SearchBlog = () => {
-    const {blogs, sortedBlogs,setFilteredList, filteredList, storeBlogIdTokenInLocale} = useAuth();
-    const [searchedBlog, setSearchedBlog] = useState(localStorage.getItem('searchBlog' || ''))
+    const {blogs, sortedBlogs, setSearchBlog, filteredList, storeBlogIdTokenInLocale} = useAuth();
     const searchElement = useRef("");
     const [ page, setPage ] = useState(1);
-    const location = useLocation();
     const params = useParams();
     const navigate  = useNavigate();
+    const hasValue = localStorage.getItem('searchBlog');
+    
+    let str = params.data;
+    let finalStr = str.split("_").join(" ");
+
+    useEffect(() => {
+        let str = params.data;
+        let finalStr = str.split("_").join(" ");
+        if (finalStr !== hasValue) {
+            setSearchBlog(finalStr);
+            localStorage.setItem('currentSearchPage', 1);
+            setPage(1);
+        } else {
+            const storedPage = localStorage.getItem('currentSearchPage');
+            if (storedPage) {
+                setPage(parseInt(storedPage));
+            }
+        }
+    }, [params.data]);
+
+    useEffect(() => {
+        console.log("switched");
+        console.log(finalStr);
+        setSearchBlog(finalStr);
+    }, [])
+
     const setSingleBlogId = (id) => {
-        console.log(id)
-        storeBlogIdTokenInLocale(id)
+        console.log(id);
+        storeBlogIdTokenInLocale(id);
     }
-    const onloadFunction = () => {
-        const filteredLists = sortedBlogs.filter((item) =>
-            item.body.toLowerCase().includes(searchedBlog.toLowerCase()) || item.title.toLowerCase().includes(searchedBlog.toLowerCase())
-        );
-        setFilteredList(filteredLists);
-    }
-    // useEffect(() => {
-    //     const filteredLists = sortedBlogs.filter((item) =>
-    //         item.body.toLowerCase().includes(searchedBlog.toLowerCase()) || item.title.toLowerCase().includes(searchedBlog.toLowerCase())
-    //     );
-    //     setFilteredList(filteredLists);
-    // }, [searchedBlog]);
-    useOnLoad(onloadFunction);
+
     const handleSearch = (event) => {
         event.preventDefault();
         const searchValue = searchElement.current.value.trim();
         if (!searchValue) {
             return;
         }
-        setSearchedBlog(searchValue);
+        setSearchBlog(searchValue);
+        localStorage.setItem('searchBlog', searchValue)
         navigate(`/search/${searchValue.replace(/\s+/g, '_')}`);
         searchElement.current.value = "";
+        localStorage.setItem("currentSearchPage", 1)
     };
 
     const selectedPage = (index) => {
@@ -54,11 +62,11 @@ const SearchBlog = () => {
         localStorage.setItem("currentSearchPage", index);
     }
     const previousPage = () => {
-        setPage((page) => page === 1 ? Math.ceil(sortedBlogs.length / 9) : page - 1)
+        setPage((page) => page === 1 ? Math.ceil(filteredList.length / 9) : page - 1)
         localStorage.setItem("currentSearchPage", page - 1);
     }
     const nextPage = () => {
-        setPage((page) => page === Math.ceil(sortedBlogs.length / 9) ? 1 : page + 1)
+        setPage((page) => page === Math.ceil(filteredList.length / 9) ? 1 : page + 1)
         localStorage.setItem("currentSearchPage", page + 1);
     }
     useEffect(() => {
@@ -90,7 +98,7 @@ const SearchBlog = () => {
                     <div className={styles.blogCard} key={index}>
                         <div className={styles.blogTitle}>{blog.title}</div>
                         <div className={styles.blogBody}><div className={styles.blogBodyText}>{blog.body}</div></div>
-                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions}</div>
+                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions?.likes}</div>
                         <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>{tag}</span>)}</div>
                         <NavLink  aria-label="Go to the blog Page" to={`/blog/${blog.title.replace(/\s+/g, '-')}`}>
                         <button className={styles.readBtn} type="button" onClick={() => setSingleBlogId(blog._id)}>Read More</button>

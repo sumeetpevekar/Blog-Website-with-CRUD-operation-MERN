@@ -19,6 +19,9 @@ const CreateBlog = () => {
         title : "",
         tags : "",
         body: "",
+        reactions : {
+            likes : 0
+        },
     });
     const handleInput = (e) => {
         const { name, value } = e.target;

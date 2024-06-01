@@ -10,11 +10,11 @@ import { FaPencilAlt } from "react-icons/fa";
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const {user} = useAuth();
-    console.log(user.name)
+    // console.log(user.name)
     // const name = [user.name.split(' ')]
     const userName = String(user.name).split(' ');
-    console.log(userName)
-    console.log(name)
+    // console.log(userName)
+    // console.log(name)
     const {isLoggedIn} = useAuth();
     const toggleMenu = () => {
       setIsOpen(!isOpen);
@@ -24,7 +24,7 @@ const Header = () => {
             <div className={`${styles.container}`}>
                 <div className={`${styles.linksContainer}`}>
                 <div className={`${styles.logoName}`}>
-                    <NavLink className={`${styles.link} ${styles.logo}`} to="/">Blog Adda</NavLink>
+                    <NavLink className={`${styles.link} ${styles.logo}`} onClick={() => localStorage.setItem('currentPage', 1)} to="/">Blog Adda</NavLink>
                 </div>
                 <nav>
                     <ul className={styles.ulLinksContainer}>

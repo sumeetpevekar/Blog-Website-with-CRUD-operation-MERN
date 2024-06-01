@@ -1,5 +1,5 @@
 const {Schema, model} = require("mongoose")
-
+const mongoose = require('mongoose')
 const blogSchema = new Schema({
     id  : {
         type : Number,
@@ -20,12 +20,13 @@ const blogSchema = new Schema({
         required : true,
     },
     reactions  : {
-        type : Number,
+        type : Object,
     },
     username : {
         type : String,
         required : true
     },
+    likedBy: { type: [String]} 
 })
 
 const blogs = new model('blogs', blogSchema);

@@ -100,5 +100,32 @@ const deleteBlogsById = async (req, res) => {
         console.log(error)
     }
 }
-
-module.exports = {updateUserDetailsById, getAllBlogs, getSingleBlogById, getSingleBlogToReadById, postBlogs, getUsersBlogByUsername, updateBlogsById, deleteBlogsById, deleteBlogs};
+const updateReactionByUser = async (req, res) => {
+    try{
+        const blogId = req.params.id;
+        const userId = req.body.userId;
+        const blogList = await blogs.find({_id: blogId})
+        const foundBlog = blogList[0];
+        if(!foundBlog.likedBy){
+            return foundBlog.likedBy = [];
+        }
+        if(foundBlog.likedBy.includes(userId)){
+            foundBlog.reactions.likes--;
+            let likes = foundBlog.likedBy;
+            foundBlog.likedBy = likes.filter((item) => item !== userId); 
+            await blogs.updateOne({_id: blogId}, {$set: foundBlog});
+            return res.status(200).json({message : "DISLIKE"});
+        }else{
+            foundBlog.likedBy.push(userId);
+            foundBlog.reactions.likes++;
+            await blogs.updateOne({_id: blogId}, {$set: foundBlog})
+            return res.status(200).json({message : "LIKE"});
+        }
+        // console.log("blog found", foundBlog);
+        // console.log("blog liked id by the user", blogId, userId, updateBlog);
+        // return res.status(200).json({message : blogId});
+    }catch(error){
+        console.log(error);
+    }
+}
+module.exports = {updateUserDetailsById, getAllBlogs, getSingleBlogById, getSingleBlogToReadById, postBlogs, getUsersBlogByUsername, updateBlogsById, deleteBlogsById, deleteBlogs, updateReactionByUser};

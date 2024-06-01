@@ -6,7 +6,7 @@ import { IoSearch } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 const Home = () => {
-    const {blogs, sortedBlogs,setFilteredList, storeBlogIdTokenInLocale} = useAuth();
+    const {blogs, sortedBlogs,setFilteredList, setSearchBlog, storeBlogIdTokenInLocale} = useAuth();
     const searchElement = useRef("");
     const [ page, setPage ] = useState(1);
     const navigate = useNavigate();
@@ -24,14 +24,10 @@ const Home = () => {
         if (!searchValue) {
             return;
         }
-        localStorage.setItem("searchBlog", searchValue);
-        const searchList = sortedBlogs.filter((item) =>
-            item.body.toLowerCase().includes(searchValue) || item.title.toLowerCase().includes(searchValue)
-        );
-        setFilteredList(searchList);
+        setSearchBlog(searchValue);
         navigate(`/search/${searchElement.current.value.replace(/\s+/g, '_')}`)
         searchElement.current.value = "";
-        
+        localStorage.setItem("currentSearchPage", 1);
     };
     const selectedPage = (index) => {
         setPage(index)
@@ -70,16 +66,21 @@ const Home = () => {
                     <p className={styles.websitePara}>Discover a world of ideas and inspiration at Blog Adda. Dive into engaging articles written by our passionate team of writers and contributors. Join our community today and let your journey of exploration begin. Blog Adda - Where knowledge meets adventure.</p>
                 </div>
                 <div className={styles.blogsContainer}>
-                    {sortedBlogs.slice((page * 9) - 9, page * 9).map((blog, index) => 
-                    <div className={styles.blogCard} key={index}>
+                    {sortedBlogs.slice((page * 9) - 9, page * 9).map((blog, index) => {
+                        // let likes = blog.reactions;
+                        return (
+
+                        <div className={styles.blogCard} key={index}>
                         <div className={styles.blogTitle}>{blog.title}</div>
                         <div className={styles.blogBody}><div className={styles.blogBodyText}>{blog.body}</div></div>
-                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions}</div>
+                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions?.likes || 0}</div>
                         <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>{tag}</span>)}</div>
                         <NavLink  aria-label="Go to the blog Page" to={`/blog/${blog.title.replace(/\s+/g, '-')}`}>
                         <button className={styles.readBtn} type="button" onClick={() => setSingleBlogId(blog._id)}>Read More</button>
                         </NavLink>
-                    </div>
+                        </div>
+                    )
+                    }
                     )}
                     {
                         sortedBlogs.length > 0 && <div className={styles.pagination}>

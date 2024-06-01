@@ -95,7 +95,7 @@ const UserProfile = () => {
                     <div className={styles.blogCard} key={index}>
                         <div className={styles.blogTitle}><div className={styles.blogTitleText}>{blog.title}</div></div>
                         <div className={styles.blogBody}><div className={styles.blogBodyText}>{blog.body}</div></div>
-                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions}</div>
+                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions?.likes || 0}</div>
                         <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>{tag}</span>)}</div>
                         <div  className={styles.readMoreBox}>
                         <NavLink aria-label="Go to the blog Page" to={`/blog/${blog.title.replace(/\s+/g, '-')}`}>

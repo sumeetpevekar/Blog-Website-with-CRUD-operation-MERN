@@ -9,12 +9,13 @@ const AuthProvider = ({children}) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState('');
     const [isLoading, setIsLoading] = useState(true)
+    const [loading, setLoading] = useState("")
     const [blogs,  setBlogs] = useState([]);
     const [singleBlog, setSingleBlog] = useState(localStorage.getItem('blogId'));
     const AuthorizationToken = `Bearer ${token}`;
     const [userBlogs, setUserBlogs] =  useState([]);
 
-    console.log(singleBlog)
+    // console.log(singleBlog)
     // storing token in localStorage
     const storeTokenInLocale = (token) => {
         setToken(token)
@@ -28,6 +29,8 @@ const AuthProvider = ({children}) => {
     // logout operation
     const LogoutUser = () => {
         setToken("");
+        localStorage.removeItem("currentSearchPage");
+        localStorage.removeItem("currentPage");
         return localStorage.removeItem("token");
     }
     // check whether user is logged in
@@ -45,8 +48,8 @@ const AuthProvider = ({children}) => {
             })
             if(response.ok){
                 const {userData} = await response.json();
-                console.log(userData);
-                setUser(userData)
+                // console.log(userData);
+                setUser(userData);
                 setIsLoading(false);
             }else{
                 console.log("Error fetching user data")
@@ -80,7 +83,7 @@ const AuthProvider = ({children}) => {
                 }
             })
             const data = await response.json();
-            console.log(data)
+            // console.log(data)
             const blogData = data.message;
             console.log(blogData)
             if(response.ok){
@@ -89,16 +92,39 @@ const AuthProvider = ({children}) => {
         }catch(error){
             console.log(error)
         }
-        console.log(userBlogs)
+        // console.log(userBlogs)
     }
     // search blog functionality
-    const [filteredList, setFilteredList] = useState([])
+    const [filteredList, setFilteredList] = useState([]);
     const sortedBlogs = [...blogs].reverse();
-   
+    const [searchedBlog, setSearchedBlog] = useState(localStorage.getItem('searchBlog'));
+
+    const setSearchBlog = (searchValue) => {
+        localStorage.setItem("searchBlog", searchValue);
+        const searchList = sortedBlogs.filter((item) =>
+            item.body.toLowerCase().includes(searchValue) || item.title.toLowerCase().includes(searchValue)
+        );
+        setFilteredList(searchList);
+        console.log("called", searchValue);
+    }
+
+    const loadFilteredList = () => {
+        console.log(searchedBlog);
+        const searchList = sortedBlogs.filter((item) =>
+            item.body.toLowerCase().includes(searchedBlog) || item.title.toLowerCase().includes(searchedBlog)
+        );
+        setFilteredList(searchList);
+        // console.log(filteredList);
+        console.log("called");
+    }
+   useEffect(() => { 
+        loadFilteredList();
+   }, [user]);
+
     useEffect(() => {
         getBlogsData();
         userAuthentication();
-        getUsersBlogs()
+        getUsersBlogs();
         token;
     }, [token])
 
@@ -121,6 +147,7 @@ const AuthProvider = ({children}) => {
         sortedBlogs,
         filteredList,
         setFilteredList,
+        setSearchBlog,
     }}>
         {children}
     </AuthContext.Provider>

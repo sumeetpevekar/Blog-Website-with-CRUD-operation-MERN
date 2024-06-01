@@ -22,4 +22,7 @@ router.route('/blogs/delete/:id').delete(authMiddleware, userControllers.deleteB
 
 router.route('/blogs/:username/get').get(authMiddleware, userControllers.getUsersBlogByUsername)
 
+router.route('/blogs/:id/reactions').post(authMiddleware, userControllers.updateReactionByUser);
+
+
 module.exports = router;
