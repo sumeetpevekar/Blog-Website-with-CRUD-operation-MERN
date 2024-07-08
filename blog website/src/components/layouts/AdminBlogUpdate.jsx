@@ -74,7 +74,7 @@ const AdminBlogUpdate = () => {
                 <h1 className={styles.heading}>Update User Blog</h1>
                 <form onSubmit={handleSubmit} className={styles.inputContainer}>
                 <label htmlFor="username" className={styles.label}>Username</label>
-                <input type="text" readOnly id="username" name="username" value={blog.username}  onInput={handleInput} className={styles.input}/>
+                <input type="text" id="username" name="username" value={blog.username}  onInput={handleInput} className={styles.input}/>
                 <label htmlFor="title" className={styles.label}>Title</label>
                 <input type="text" id="title" name="title" value={blog.title}  onInput={handleInput} className={styles.input}/>
                 <label htmlFor="body" className={styles.label}>Body</label>

@@ -17,7 +17,7 @@ const AdminBlogs = () => {
             })
             const {message} = await response.json();
             console.log(message)
-            setBlogs(message);
+            setBlogs(message.reverse());
         }catch(error){
             console.log(error);
         }

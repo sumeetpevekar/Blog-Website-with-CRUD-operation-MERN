@@ -1,12 +1,16 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Navigate, Outlet } from "react-router-dom";
 import { AdminLayout } from "./AdminLayout";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import styles from "./styles/AdminPageContainer.module.css"
 import { useState } from "react";
+import { useAuth } from "../../store/auth";
 
 const AdminContainer = () => {
     const [active, setActive] = useState(false)
-
+    const {user} = useAuth();
+    if(!user.isAdmin){
+        return <Navigate to="/" />
+    }
     const toggleMenu = () => {
         setActive(!active)
     }

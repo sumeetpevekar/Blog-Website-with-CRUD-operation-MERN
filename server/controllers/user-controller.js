@@ -104,8 +104,8 @@ const updateReactionByUser = async (req, res) => {
     try{
         const blogId = req.params.id;
         const userId = req.body.userId;
-        const blogList = await blogs.find({_id: blogId})
-        const foundBlog = blogList[0];
+        const foundBlog = await blogs.findOne({_id: blogId})
+        console.log(foundBlog)
         if(!foundBlog.likedBy){
             return foundBlog.likedBy = [];
         }
@@ -121,9 +121,6 @@ const updateReactionByUser = async (req, res) => {
             await blogs.updateOne({_id: blogId}, {$set: foundBlog})
             return res.status(200).json({message : "LIKE"});
         }
-        // console.log("blog found", foundBlog);
-        // console.log("blog liked id by the user", blogId, userId, updateBlog);
-        // return res.status(200).json({message : blogId});
     }catch(error){
         console.log(error);
     }

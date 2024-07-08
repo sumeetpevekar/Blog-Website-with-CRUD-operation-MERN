@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import styles from "./styles/AdminUserUpdate.module.css"
 import { useAuth } from "../../store/auth"
-import { Form, useParams } from "react-router-dom"
+import { Form, useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify";
 
 const AdminUserUpdate = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState({
         username : "",
         phone : "",
@@ -52,7 +53,8 @@ const AdminUserUpdate = () => {
                 body : JSON.stringify(data)
             })
             if(response.ok){
-                toast.success("Updated successfully")
+                toast.success("Updated successfully");
+                navigate("/admin/users");
             }else{
                 toast.error("Not updated")
             }

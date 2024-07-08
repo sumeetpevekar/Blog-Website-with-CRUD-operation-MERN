@@ -1,14 +1,14 @@
 import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import styles from "../components/styles/Home.module.css"
 import { useAuth } from "../store/auth";
-import { MdAddReaction } from "react-icons/md";
+import { MdAddReaction, MdOutlineAddReaction } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 
 const SearchBlog = () => {
-    const {blogs, sortedBlogs, setSearchBlog, filteredList, storeBlogIdTokenInLocale} = useAuth();
+    const {blogs, user, sortedBlogs, setSearchBlog, filteredList, storeBlogIdTokenInLocale} = useAuth();
     const searchElement = useRef("");
     const [ page, setPage ] = useState(1);
     const params = useParams();
@@ -98,8 +98,8 @@ const SearchBlog = () => {
                     <div className={styles.blogCard} key={index}>
                         <div className={styles.blogTitle}>{blog.title}</div>
                         <div className={styles.blogBody}><div className={styles.blogBodyText}>{blog.body}</div></div>
-                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions?.likes}</div>
-                        <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>{tag}</span>)}</div>
+                        <div className={styles.reactionBox}>{blog.likedBy.includes(user._id) ? <MdAddReaction /> : <MdOutlineAddReaction  />} {blog.reactions?.likes}</div>
+                        <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>#{tag}</span>)}</div>
                         <NavLink  aria-label="Go to the blog Page" to={`/blog/${blog.title.replace(/\s+/g, '-')}`}>
                         <button className={styles.readBtn} type="button" onClick={() => setSingleBlogId(blog._id)}>Read More</button>
                         </NavLink>

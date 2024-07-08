@@ -4,7 +4,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { useAuth } from "../store/auth";
 import { CiEdit } from "react-icons/ci";
 import { useEffect, useState } from "react";
-import { MdAddReaction } from "react-icons/md";
+import { MdAddReaction, MdOutlineAddReaction } from "react-icons/md";
 import { GoKebabHorizontal } from "react-icons/go";
 import { HiMiniXMark } from "react-icons/hi2";
 import { toast } from "react-toastify";
@@ -16,7 +16,9 @@ const UserProfile = () => {
     if(!token){
         navigate("/")
     }
-    
+    const finalBlogs = [...userBlogs].reverse();
+    console.log(userBlogs);
+    console.log(finalBlogs);
     useEffect(() => {
         getUsersBlogs();
     }, [])
@@ -44,9 +46,9 @@ const UserProfile = () => {
                 },
             })
             if(response.ok){
-                toast.success("Message Deleted successfully")
+                toast.success("Message Deleted successfully");
                 getUsersBlogs();
-                getBlogsData()
+                getBlogsData();
             }else{
                 toast.error("Message not Deleted")
             }
@@ -91,12 +93,12 @@ const UserProfile = () => {
                 {userBlogs.length === 0 ? <h2>You have not uploaded blogs yet</h2> : <h2>Your blogs</h2> }
                 </div>
                 <div className={styles.blogsContainer}>
-                    {Array.isArray(userBlogs) ? (userBlogs.map((blog, index) => (
+                    {Array.isArray(userBlogs) ? (finalBlogs.map((blog, index) => (
                     <div className={styles.blogCard} key={index}>
                         <div className={styles.blogTitle}><div className={styles.blogTitleText}>{blog.title}</div></div>
                         <div className={styles.blogBody}><div className={styles.blogBodyText}>{blog.body}</div></div>
-                        <div className={styles.reactionBox}><MdAddReaction /> {blog.reactions?.likes || 0}</div>
-                        <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>{tag}</span>)}</div>
+                        <div className={styles.reactionBox}>{blog.likedBy.includes(user._id) ? <MdAddReaction /> : <MdOutlineAddReaction  />} {blog.reactions?.likes || 0}</div>
+                        <div className={styles.tagBox}>{blog.tags.map((tag, index) => <span key={index} className={styles.tagSpan}>#{tag}</span>)}</div>
                         <div  className={styles.readMoreBox}>
                         <NavLink aria-label="Go to the blog Page" to={`/blog/${blog.title.replace(/\s+/g, '-')}`}>
                         <button className={styles.readBtn} type="button" onClick={() => setSingleBlogId(blog._id)}>Read More</button>

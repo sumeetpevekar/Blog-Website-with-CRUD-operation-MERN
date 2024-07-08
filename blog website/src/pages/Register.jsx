@@ -47,7 +47,7 @@ const Register = () => {
                 navigate("/")
                 toast.success("Registration successful");
             }else{
-                toast.warning(data.extraDetails ? data.extraDetails : data.message)
+                toast.warning(data.extraDetails ? data.extraDetails : data.message);
             }
         }catch(err){
             console.log("register", err)
