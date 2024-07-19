@@ -3,7 +3,6 @@ Blog Adda is a robust blog website that allows users to create, read, update, an
  
 Features
 CRUD Operations: Users can create, read, update, and delete blog posts.
-
 Admin Panel: Admin users can manage users and blog content.
 
 User Authentication: Secure authentication using JSON Web Tokens and password hashing with bcrypt.js.
