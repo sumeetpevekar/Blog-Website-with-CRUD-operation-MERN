@@ -1,6 +1,6 @@
 Blog Adda
 Blog Adda is a robust blog website that allows users to create, read, update, and delete blog posts. It features an admin panel for managing users and blog content, secure user authentication using JSON Web Token, and form validation with Zod for enhanced security and reliability.
-
+ 
 Features
 CRUD Operations: Users can create, read, update, and delete blog posts.
 Admin Panel: Admin users can manage users and blog content.
